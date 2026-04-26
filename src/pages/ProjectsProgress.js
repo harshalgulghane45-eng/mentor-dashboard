@@ -1,8 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // ✅ We need this to click and travel!
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { studentsData } from "../data/studentsData"; // ✅ Importing our master list
+import { studentsData } from "../data/studentsData";
 import "../styles/styles.css";
 
 const ProjectsProgress = () => {
@@ -12,47 +12,80 @@ const ProjectsProgress = () => {
         <div className="projects-page">
             <Navbar />
             <main className="projects-main">
-                <h1 className="projects-heading">Track Assigned Students <br /> and Progress</h1>
-                <p className="projects-description">
-                    View and manage the students assigned to you with detailed profiles and progress logs.
-                </p>
-                <div className="projects-table-wrapper">
+                {/* Animated Header */}
+                <div className="float-animation" style={{ textAlign: 'center', marginBottom: '40px' }}>
+                    <h1 className="projects-heading">Project Pulse</h1>
+                    <p className="projects-description">
+                        Track real-time progress and jump into student profiles with a single click.
+                    </p>
+                </div>
+
+                {/* Glassmorphic Table Wrapper */}
+                <div className="projects-table-wrapper glass-card" style={{ animation: "fadeSlideUp 0.8s ease both" }}>
                     <table className="projects-table">
                         <thead>
                             <tr>
                                 <th>Student</th>
-                                <th>Project</th>
-                                <th>Progress</th>
+                                <th>Active Project</th>
+                                <th>Visual Progress</th>
                             </tr>
                         </thead>
                         <tbody>
                             {studentsData.map((student, index) => (
-                                <tr key={index} style={{ animation: "fadeSlideUp 0.5s ease both", animationDelay: `${index * 0.1}s` }}>
+                                <tr 
+                                    key={index} 
+                                    style={{ 
+                                        animation: `fadeSlideUp 0.5s ease both ${index * 0.1}s`,
+                                    }}
+                                >
                                     <td className="student-cell">
-                                        
-                                        {/* 👇 HERE IS THE CLICKABLE MAGIC 👇 */}
                                         <div 
-                                            className="student-content" 
+                                            className="student-content stat-card-hover" 
                                             onClick={() => navigate(`/student/${student.id}`)}
-                                            style={{ cursor: "pointer", padding: "4px", borderRadius: "8px", transition: "background 0.2s" }}
-                                            onMouseOver={(e) => e.currentTarget.style.background = "rgba(0,91,255,0.05)"}
-                                            onMouseOut={(e) => e.currentTarget.style.background = "transparent"}
+                                            style={{ 
+                                                cursor: "pointer", 
+                                                padding: "10px", 
+                                                borderRadius: "12px",
+                                                background: "rgba(0, 91, 255, 0.03)",
+                                                border: "1px solid rgba(0, 91, 255, 0.1)"
+                                            }}
                                         >
-                                            <img src={student.avatar} alt={student.name} />
+                                            <img 
+                                                src={student.avatar} 
+                                                alt={student.name} 
+                                                style={{ border: "2px solid #005bff" }}
+                                            />
                                             <div className="student-info">
-                                                <div className="student-name" style={{ transition: "color 0.2s" }}>{student.name}</div>
-                                                <div className="student-email">{student.email}</div>
+                                                <div className="student-name" style={{ fontWeight: "700", color: "var(--primary-blue, #005bff)" }}>
+                                                    {student.name}
+                                                </div>
+                                                <div className="student-email" style={{ fontSize: '12px' }}>
+                                                    {student.email}
+                                                </div>
                                             </div>
                                         </div>
-
                                     </td>
-                                    <td><span style={{ fontWeight: 500 }}>{student.project}</span></td>
+                                    
                                     <td>
-                                        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                                            <div className="progress-bar" style={{ flex: 1 }}>
-                                                <div className="progress-fill" style={{ width: `${student.progress}%` }}></div>
+                                        <div style={{ fontWeight: 600, fontSize: '15px' }}>
+                                            {student.project}
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+                                            <div className="progress-bar" style={{ flex: 1, height: '8px', background: 'rgba(0,0,0,0.05)' }}>
+                                                <div 
+                                                    className="progress-fill" 
+                                                    style={{ 
+                                                        width: `${student.progress}%`,
+                                                        boxShadow: "0 0 10px rgba(0, 91, 255, 0.3)"
+                                                    }}
+                                                ></div>
                                             </div>
-                                            <span style={{ fontSize: "13px", fontWeight: "600", color: "#005bff", minWidth: "36px" }}>{student.progress}%</span>
+                                            <span style={{ fontSize: "14px", fontWeight: "800", color: "#005bff", minWidth: "40px" }}>
+                                                {student.progress}%
+                                            </span>
                                         </div>
                                     </td>
                                 </tr>
