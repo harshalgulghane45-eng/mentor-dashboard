@@ -1,108 +1,58 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // ✅ We need this to click and travel!
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
-const students = [
-    {
-        name: "Angat Mali",
-        email: "angat.mali@example.com",
-        project: "Learning Platform",
-        progress: 40,
-        avatar: "https://i.pravatar.cc/100?img=1",
-    },
-    {
-        name: "Pragya Jha",
-        email: "pragya.jha@example.com",
-        project: "Portfolio Website",
-        progress: 70,
-        avatar: "https://i.pravatar.cc/100?img=2",
-    },
-    {
-        name: "Freddy Fernandes",
-        email: "freddy.fernandes@example.com",
-        project: "Mobile App",
-        progress: 60,
-        avatar: "https://i.pravatar.cc/100?img=3",
-    },
-    {
-        name: "Pravin Goswami",
-        email: "pravin.goswami@example.com",
-        project: "Learning Platform",
-        progress: 30,
-        avatar: "https://i.pravatar.cc/100?img=4",
-    },
-    {
-        name: "Shruti Biradar",
-        email: "shruti.biradar@example.com",
-        project: "Learning Platform",
-        progress: 80,
-        avatar: "https://i.pravatar.cc/100?img=5",
-    },
-];
+import { studentsData } from "../data/studentsData"; // ✅ Importing our master list
+import "../styles/styles.css";
 
 const ProjectsProgress = () => {
+    const navigate = useNavigate();
+
     return (
-        <div>
+        <div className="projects-page">
             <Navbar />
-            <main style={{ padding: "40px", textAlign: "center" }}>
-                <h1 style={{ fontSize: "2.5rem", marginBottom: "10px" }}>
-                    Track Assigned Students <br /> and Progress
-                </h1>
-                <p style={{ color: "#555", marginBottom: "30px" }}>
+            <main className="projects-main">
+                <h1 className="projects-heading">Track Assigned Students <br /> and Progress</h1>
+                <p className="projects-description">
                     View and manage the students assigned to you with detailed profiles and progress logs.
                 </p>
-
-                <div
-                    style={{
-                        margin: "0 auto",
-                        maxWidth: "80%",
-                        borderRadius: "12px",
-                        overflow: "hidden",
-                        border: "1px solid #e0e0e0",
-                    }}
-                >
-                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                        <thead style={{ background: "#fafafa", borderBottom: "1px solid #e0e0e0" }}>
+                <div className="projects-table-wrapper">
+                    <table className="projects-table">
+                        <thead>
                             <tr>
-                                <th style={thStyle}>Student</th>
-                                <th style={thStyle}>Project</th>
-                                <th style={thStyle}>Progress</th>
+                                <th>Student</th>
+                                <th>Project</th>
+                                <th>Progress</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {students.map((student, index) => (
-                                <tr key={index} style={{ borderBottom: "1px solid #f0f0f0" }}>
-                                    <td style={tdStyle}>
-                                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                                            <img
-                                                src={student.avatar}
-                                                alt={student.name}
-                                                style={{ width: "40px", height: "40px", borderRadius: "50%" }}
-                                            />
-                                            <div style={{ textAlign: "left" }}>
-                                                <div style={{ fontWeight: "bold" }}>{student.name}</div>
-                                                <div style={{ fontSize: "0.9rem", color: "#777" }}>{student.email}</div>
+                            {studentsData.map((student, index) => (
+                                <tr key={index} style={{ animation: "fadeSlideUp 0.5s ease both", animationDelay: `${index * 0.1}s` }}>
+                                    <td className="student-cell">
+                                        
+                                        {/* 👇 HERE IS THE CLICKABLE MAGIC 👇 */}
+                                        <div 
+                                            className="student-content" 
+                                            onClick={() => navigate(`/student/${student.id}`)}
+                                            style={{ cursor: "pointer", padding: "4px", borderRadius: "8px", transition: "background 0.2s" }}
+                                            onMouseOver={(e) => e.currentTarget.style.background = "rgba(0,91,255,0.05)"}
+                                            onMouseOut={(e) => e.currentTarget.style.background = "transparent"}
+                                        >
+                                            <img src={student.avatar} alt={student.name} />
+                                            <div className="student-info">
+                                                <div className="student-name" style={{ transition: "color 0.2s" }}>{student.name}</div>
+                                                <div className="student-email">{student.email}</div>
                                             </div>
                                         </div>
+
                                     </td>
-                                    <td style={tdStyle}>{student.project}</td>
-                                    <td style={tdStyle}>
-                                        <div
-                                            style={{
-                                                backgroundColor: "#eee",
-                                                borderRadius: "10px",
-                                                overflow: "hidden",
-                                                height: "10px",
-                                                width: "100%",
-                                            }}
-                                        >
-                                            <div
-                                                style={{
-                                                    width: `${student.progress}%`,
-                                                    backgroundColor: "#005bff",
-                                                    height: "100%",
-                                                }}
-                                            ></div>
+                                    <td><span style={{ fontWeight: 500 }}>{student.project}</span></td>
+                                    <td>
+                                        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                                            <div className="progress-bar" style={{ flex: 1 }}>
+                                                <div className="progress-fill" style={{ width: `${student.progress}%` }}></div>
+                                            </div>
+                                            <span style={{ fontSize: "13px", fontWeight: "600", color: "#005bff", minWidth: "36px" }}>{student.progress}%</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -114,22 +64,6 @@ const ProjectsProgress = () => {
             <Footer />
         </div>
     );
-};
-
-const thStyle = {
-    width: "40%",
-    textAlign: "left",
-    padding: "16px",
-    fontSize: "1rem",
-    fontWeight: "600",
-    color: "#333",
-};
-
-const tdStyle = {
-    textAlign: "left",
-    padding: "16px",
-    fontSize: "0.95rem",
-    color: "#444",
 };
 
 export default ProjectsProgress;

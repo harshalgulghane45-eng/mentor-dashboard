@@ -1,144 +1,74 @@
-import React, { useState } from "react";
-import "../styles/opensource.css";
+import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import "../styles/styles.css";
 
-const contributionsData = [
-    {
-        platform: "GitHub",
-        platformIcon: "github",
-        repository: "UptoSkills LMS",
-        summary: "Fixed bug in admin dashboard",
-        date: "September 23, 2024",
-    },
-    {
-        platform: "GitLab",
-        platformIcon: "gitlab",
-        repository: "OpenEdx Platform",
-        summary: "Fixed issue error ants",
-        date: "January 22, 2024",
-    },
-    {
-        platform: "GitHub",
-        platformIcon: "github",
-        repository: "OpenEdx Platform",
-        summary: "Fixed UI flaws",
-        date: "August 31, 2023",
-    },
-    {
-        platform: "GitLab",
-        platformIcon: "gitlab",
-        repository: "Grafana",
-        summary: "Fixed UX progress",
-        date: "February 14, 2023",
-    },
-    {
-        platform: "GitHub",
-        platformIcon: "github",
-        repository: "OpenEdx Platform",
-        summary: "Implementation of new client type",
-        date: "December 11, 2022",
-    },
-    {
-        platform: "GitHub",
-        platformIcon: "github",
-        repository: "Godotx",
-        summary: "Adding the manual function",
-        date: "November 2, 2022",
-    },
+const contributions = [
+    { name: "Ayush Sawaliya", avatar: "/ayush-profile.jpg", repo: "facebook/react", prs: 2, status: "Merged" },
+    { name: "Harshal Gulghane", avatar: "/harshal-profile.jpg", repo: "vercel/next.js", prs: 5, status: "Pending" },
+    { name: "Rehan Shaikh", avatar: "/rehan-profile.jpg", repo: "tailwindlabs/tailwindcss", prs: 1, status: "Merged" },
+    { name: "Shreyansh Pandey", avatar: "/shreyansh-profile.jpg", repo: "angular/angular", prs: 3, status: "Review" },
+    { name: "Devendra Rajpurohit", avatar: "/devendra-profile.jpg", repo: "vuejs/core", prs: 4, status: "Merged" },
 ];
 
-const platformIcons = {
-    github: (
-        <svg
-            height="20"
-            width="20"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            aria-hidden="true"
-            focusable="false"
-            className="icon"
-        >
-            <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 0-.19-.007-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.63 7.63 0 012-.27c.68.003 1.37.092 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8 8 0 0016 8c0-4.42-3.58-8-8-8Z"></path>
-        </svg>
-    ),
-    gitlab: (
-        <svg
-            height="20"
-            width="20"
-            viewBox="0 0 36 36"
-            fill="currentColor"
-            aria-hidden="true"
-            focusable="false"
-            className="icon"
-        >
-            <path d="M18 0L12.8 10.666H1.2L15.2 35.333 18 28.8 20.8 35.333 34.8 10.666H23.2L18 0zM12.8 10.666 18 0l5.2 10.666H12.8z"></path>
-        </svg>
-    ),
-};
-
-function OpenSourceContributions() {
-    const [selectedUser, setSelectedUser] = useState("Mahesh Bagul");
-
-    const onUserChange = (e) => {
-        setSelectedUser(e.target.value);
-    };
-
+const OpenSourceContributions = () => {
     return (
-        <>
+        <div className="projects-page">
             <Navbar />
-            <main className="container main-content" role="main">
-                <h1 className="center-heading">Open Source Contributions</h1>
-                <p className="subtitle center-heading">
-                    Monitor, review and approve your student’s commits, pull requests,
-                    and milestones across open-source platforms.
+            <main className="projects-main">
+                <h1 className="projects-heading">Open Source Contributions</h1>
+                <p className="projects-description">
+                    Review your student's pull requests, commits, and activity on open source platforms.
                 </p>
-                <section className="activity-section" aria-label="User contributions">
-                    <div className="activity-header">
-                        <button className="tab active" aria-selected="true" role="tab">
-                            Activity
-                        </button>
-                        <div className="user-select-box">
-                            <select
-                                aria-label="Select user"
-                                value={selectedUser}
-                                onChange={onUserChange}
-                            >
-                                <option value="Mahesh Bagul">Mahesh Bagul</option>
-                                {/* Additional user options possible */}
-                            </select>
-                        </div>
-                    </div>
-                    <table className="contributions-table" role="grid">
+                <div className="projects-table-wrapper">
+                    <table className="projects-table">
                         <thead>
                             <tr>
-                                <th scope="col">Platform</th>
-                                <th scope="col">Repository</th>
-                                <th scope="col">Summary</th>
-                                <th scope="col">Date</th>
+                                <th>Student</th>
+                                <th>Repository</th>
+                                <th>Pull Requests</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {contributionsData.map((item, index) => (
-                                <tr key={index}>
-                                    <td className="platform-cell" aria-label={item.platform}>
-                                        <span className="platform-icon">
-                                            {platformIcons[item.platformIcon]}
-                                        </span>
-                                        <span className="platform-name">{item.platform}</span>
+                            {contributions.map((c, index) => (
+                                <tr key={index} style={{ animation: "fadeSlideUp 0.5s ease both", animationDelay: `${index * 0.1}s` }}>
+                                    <td className="student-cell">
+                                        <div className="student-content">
+                                            <img src={c.avatar} alt={c.name} />
+                                            <div className="student-name">{c.name}</div>
+                                        </div>
                                     </td>
-                                    <td>{item.repository}</td>
-                                    <td>{item.summary}</td>
-                                    <td>{item.date}</td>
+                                    <td>
+                                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: "#f3f4f6", padding: "6px 12px", borderRadius: "8px", fontSize: "13px", fontWeight: "600", color: "#374151" }}>
+                                            <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg>
+                                            {c.repo}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span style={{ fontSize: "15px", fontWeight: "700", color: "#4f46e5" }}>{c.prs} PRs</span>
+                                    </td>
+                                    <td>
+                                        <span style={{
+                                            padding: "6px 14px",
+                                            borderRadius: "20px",
+                                            fontSize: "12px",
+                                            fontWeight: "600",
+                                            background: c.status === "Merged" ? "#d1fae5" : c.status === "Review" ? "#fef3c7" : "#e0e7ff",
+                                            color: c.status === "Merged" ? "#065f46" : c.status === "Review" ? "#92400e" : "#3730a3",
+                                        }}>
+                                            {c.status}
+                                        </span>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                </section>
+                </div>
             </main>
             <Footer />
-        </>
+        </div>
     );
-}
+};
 
 export default OpenSourceContributions;
